@@ -21,7 +21,7 @@ window.submitForm = function(){
     data: data,
     success: function(result){
       var url = JSON.parse(result).url;
-      document.getElementById('banner').innerHTML = 'Thank you for your contribution. Your submission has been submited for review. Follow up on your submission: <a href="' + url + '">' + url + '</a>';
+      document.getElementById('banner').innerHTML = 'Thank you for your contribution. Your submission has been submitted for review. Follow up on your submission: <a href="' + url + '" target="_blank">' + url + '</a>';
       document.getElementById('resourceForm').innerHTML = '';
     }, 
     error: function(err){
