@@ -12,10 +12,14 @@ router.post('/resource', function(req, res) {
   var description = req.body.description || '';
   var category = req.body.category || '';
 
-  twitter = twitter.replace(/@/g, '');
+  title = title.trim();
+  url = url.trim();
+  twitter = twitter.replace(/@/g, '').trim();
+  description = description.trim();
+  category = category.trim();
 
   if (validator.isNull(title)) {
-  	res.json({
+  	res.status(400).json({
   		success: false,
   		error: 'Please enter a title.'
   	});
@@ -23,7 +27,7 @@ router.post('/resource', function(req, res) {
   }
 
   if (!validator.isURL(url, {require_protocol: true})) {
-  	res.json({
+  	res.status(400).json({
   		success: false,
   		error: 'Please enter a valid URL.'
   	});
@@ -31,7 +35,7 @@ router.post('/resource', function(req, res) {
   }
 
   if (validator.isNull(twitter)) {
-  	res.json({
+  	res.status(400).json({
   		success: false,
   		error: 'Please enter your Twitter handle.'
   	});
@@ -39,7 +43,7 @@ router.post('/resource', function(req, res) {
   }
 
   if (validator.isNull(description)) {
-  	res.json({
+  	res.status(400).json({
   		success: false,
   		error: 'Please enter a description.'
   	});
@@ -47,7 +51,7 @@ router.post('/resource', function(req, res) {
   }
 
   if (validator.isNull(category)) {
-  	res.json({
+  	res.status(400).json({
   		success: false,
   		error: 'Please choose a category.'
   	});
@@ -68,7 +72,7 @@ router.post('/resource', function(req, res) {
     "labels": ["resource"]
   }, function(err, response) {
   	if (err) {
-	  	res.json({
+	  	res.status(500).json({
 	  		success: false,
 	  		error: 'Unable to process your entry, please try again later.'
 	  	});
