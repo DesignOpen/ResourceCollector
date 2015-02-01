@@ -8,35 +8,37 @@
 		<div class="container">
 			<h1>Add Design Resource</h1>
 			<!-- Status Banner -->
-			<div id="banner"></div>
-			<form id="submitResource" onsubmit="return submitForm()">
-				<div class="form-item">
-					Title:
-					<input type="text" name="title" value="<%= title %>" required>
-				</div>
-				<div class="form-item">
-					URL:
-					<input type="url" name="URL" value="<%= url %>" required>
-				</div>
-				<div class="form-item">
-					Twitter Handle:
-				<input type="text" name="twitter" value="<%= twitter %>" required></div>
-				<div class="form-item">
-					Description:
-					<textarea name="description" required></textarea>
-				</div>
-				<div class="form-item">
-					Category:
-					<select name='category'>
-						<% for(var i=0; i<categories.length; i++) {%>
-							<option> <%= categories[i] %> </option>
-						<% } %>
-					</select>
-				</div>
-				<div class="form-item">
-					<input type="submit" value="Submit Resource">
-				</div>
-			</form>
+			<div><p id="banner"></p></div>
+			<div id="resourceForm">
+				<form id="submitResource" onsubmit="return submitForm()">
+					<div class="form-item">
+						Title:
+						<input type="text" name="title" value="<%= title %>" required>
+					</div>
+					<div class="form-item">
+						URL:
+						<input type="url" name="URL" value="<%= url %>" required>
+					</div>
+					<div class="form-item">
+						Twitter Handle:
+					<input type="text" name="twitter" value="<%= twitter %>" required></div>
+					<div class="form-item">
+						Description:
+						<textarea name="description" required></textarea>
+					</div>
+					<div class="form-item">
+						Category:
+						<select name='category'>
+							<% for(var i=0; i<categories.length; i++) {%>
+								<option> <%= categories[i] %> </option>
+							<% } %>
+						</select>
+					</div>
+					<div class="form-item">
+						<input type="submit" value="Submit Resource">
+					</div>
+				</form>
+			</div>
 		</div>
 	</body>
 </html>

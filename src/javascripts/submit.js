@@ -18,61 +18,16 @@ window.submitForm = function(){
   ajax({
     type: 'POST', 
     url: '/api/resource',
-    data: data, 
+    data: data,
     success: function(result){
-      displayBanner(result, true);
+      var url = JSON.parse(result).url;
+      document.getElementById('banner').innerHTML = 'Thank you for your contribution. Your submission has been submited for review. Follow up on your submission: <a href="' + url + '">' + url + '</a>';
+      document.getElementById('resourceForm').innerHTML = '';
     }, 
     error: function(err){
-      displayBanner(err);
+      document.getElementById('banner').innerHTML = JSON.parse(err.response).error || 'Unable to process your entry, please try again later.'
     }
   });
 
   return false; 
-}
-
-/*
-* Method for displaying a banner with the status of the 
-* AJAX post. Automatically sets timeout for the banner after 5 seconds
-*
-* @param {Object} res - Response from the server
-* @param {boolean} success - indicator variable if the response was successful
-*/
-var displayBanner = function(res, success){
-  var msg = document.createElement('p');
-  msg.id = 'bannerText';
-  if(!success){ //its an error
-    var node = document.createTextNode('Error: ' + JSON.parse(res.response).error);
-  }
-  else{ //success
-    var response = JSON.parse(res); //have the Issue & the URL
-    var node = document.createTextNode('Success! Created Issue #' + response.issue + ' URL: ' + response.url);
-    emptyForm();
-  }
-  msg.appendChild(node);
-
-  var element = document.getElementById('banner');
-  element.appendChild(msg);
-  // removeBanner();
-}
-
-/*
-* Method for removing banner from the DOM.
-*
-*/
-var removeBanner = function(){
-  setTimeout(function(){
-    var msg = document.getElementById('bannerText');
-    msg.parentNode.removeChild(msg);
-  }, 5000); 
-}
-
-/*
-* Simple method to empty the form after success. 
-*
-*/
-var emptyForm = function(){
-  document.forms['submitResource']['title'].value = '';
-  document.forms['submitResource']['URL'].value = '';
-  document.forms['submitResource']['twitter'].value = '';
-  document.forms['submitResource']['description'].value = '';
 }
