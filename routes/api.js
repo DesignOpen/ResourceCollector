@@ -79,7 +79,7 @@ router.post('/resource', function(req, res) {
   	}
   	res.json({
   		success: true,
-  		url: response.url,
+  		url: response.html_url,
   		issue: response.number
   	});
   });
