@@ -20,14 +20,10 @@ window.submitForm = function(){
     url: '/api/resource',
     data: data, 
     success: function(result){
-      console.log('Success!', result);
       displayBanner(result, true);
     }, 
     error: function(err){
-      console.log('Error', err);
-      console.log(err.response);
       displayBanner(err);
-      //Once error is received, add simple banner to the form
     }
   });
 
@@ -49,13 +45,14 @@ var displayBanner = function(res, success){
   }
   else{ //success
     var response = JSON.parse(res); //have the Issue & the URL
-    var node = document.createTextNode('Success! Created Issue #' + response.issue + ' URL: ' + response.url)
+    var node = document.createTextNode('Success! Created Issue #' + response.issue + ' URL: ' + response.url);
+    emptyForm();
   }
   msg.appendChild(node);
 
   var element = document.getElementById('banner');
   element.appendChild(msg);
-  removeBanner();
+  // removeBanner();
 }
 
 /*
@@ -67,4 +64,15 @@ var removeBanner = function(){
     var msg = document.getElementById('bannerText');
     msg.parentNode.removeChild(msg);
   }, 5000); 
+}
+
+/*
+* Simple method to empty the form after success. 
+*
+*/
+var emptyForm = function(){
+  document.forms['submitResource']['title'].value = '';
+  document.forms['submitResource']['URL'].value = '';
+  document.forms['submitResource']['twitter'].value = '';
+  document.forms['submitResource']['description'].value = '';
 }
