@@ -2,8 +2,7 @@
 <html>
 <head>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
-	<script src="/javascripts/ajax.min.js"></script>
-	<script src="/javascripts/submit.js"></script> 
+	<script src="/javascripts/submit.js"></script>
 </head>
 <body>
 	<h3>Resource Collector Form</h3>
@@ -12,11 +11,11 @@
 		<div>Title: <input type="text" name="title" required></div>
 		<div>URL: <input type="url" name="URL" required></div>
 		<div>Twitter Handle: <input type="text" name="twitter" required></div>
-		<div>Description: 
+		<div>Description:
 			<textarea form='submitResource' name="description">
-			</textarea> 
+			</textarea>
 		</div>
-		<div> Category: 
+		<div> Category:
 			<select name='category'>
 				<% for(var i=0; i<categories.length; i++) {%>
 					<option> <%= categories[i] %> </option>
