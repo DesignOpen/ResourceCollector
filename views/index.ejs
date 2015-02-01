@@ -8,9 +8,9 @@
 	<h3>Resource Collector Form</h3>
 	<!-- action="/api/resource" method="post" -->
 	<form id="submitResource" onsubmit="return submitForm()">
-		<div>Title: <input type="text" name="title" required></div>
-		<div>URL: <input type="url" name="URL" required></div>
-		<div>Twitter Handle: <input type="text" name="twitter" required></div>
+		<div>Title: <input type="text" name="title" value="<%= title %>" required></div>
+		<div>URL: <input type="url" name="URL" value="<%= url %>" required></div>
+		<div>Twitter Handle: <input type="text" name="twitter" value="<%= twitter %>" required></div>
 		<div>Description:
 			<textarea form='submitResource' name="description">
 			</textarea>

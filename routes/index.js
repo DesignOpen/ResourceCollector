@@ -5,7 +5,12 @@ var categories = ["benefits", "blog", "challenges", "community", "design", "educ
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { categories: categories });
+  res.render('index', {
+  	title: req.query.title || '',
+  	url: req.query.url || '',
+  	twitter: req.query.twitter || '',
+  	categories: categories 
+  });
 });
 
 module.exports = router;
