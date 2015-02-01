@@ -6,11 +6,13 @@ var env = require('../config/env');
 
 /* Process new resource form */
 router.post('/resource', function(req, res) {
-  var title = req.body.title;
-  var url = req.body.URL;
-  var twitter = req.body.twitter.replace(/@/g, '');
-  var description = req.body.description;
-  var category = req.body.category;
+  var title = req.body.title || '';
+  var url = req.body.URL || '';
+  var twitter = req.body.twitter || '';
+  var description = req.body.description || '';
+  var category = req.body.category || '';
+
+  twitter = twitter.replace(/@/g, '');
 
   if (validator.isNull(title)) {
   	res.json({
