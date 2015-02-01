@@ -1,7 +1,9 @@
 /*
-* Method to make an AJAX call to the API. 
+* Method to make an AJAX call to the API.
 *
 */
+var ajax = require('component-ajax');
+
 function submitForm(){
 	ajax.ajax('/api/resource', {
 		success: function(result){
