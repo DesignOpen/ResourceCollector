@@ -2,10 +2,13 @@
 <html>
 <head>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="/javascripts/ajax.min.js"></script>
+	<script src="/javascripts/submit.js"></script> 
 </head>
 <body>
 	<h3>Resource Collector Form</h3>
-	<form id="submitResource" action="/api/resource" method="post">
+	<!-- action="/api/resource" method="post" -->
+	<form id="submitResource" onsubmit="return submitForm()">
 		<div>Title: <input type="text" name="title" required></div>
 		<div>URL: <input type="url" name="URL" required></div>
 		<div>Twitter Handle: <input type="text" name="twitter" required></div>
