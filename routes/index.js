@@ -13,4 +13,11 @@ router.get('/', function(req, res) {
   });
 });
 
+/* GET bookmarklet JS. */
+router.get('/bookmarklet.js', function(req, res) {
+	res.render('bookmarklet-js', {
+		host: req.headers.host
+	});
+});
+
 module.exports = router;
