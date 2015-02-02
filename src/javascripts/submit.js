@@ -12,7 +12,9 @@ window.submitForm = function(){
     'twitter': document.forms['submitResource']['twitter'].value, 
     'description': document.forms['submitResource']['description'].value, 
     'category': document.forms['submitResource']['category'].value
-  }; 
+  };
+
+  document.getElementById('resourceSubmit').disabled = true;
 
   //make the AJAX call to the server
   ajax({
@@ -25,7 +27,8 @@ window.submitForm = function(){
       document.getElementById('resourceForm').innerHTML = '';
     }, 
     error: function(err){
-      document.getElementById('banner').innerHTML = JSON.parse(err.response).error || 'Unable to process your entry, please try again later.'
+      document.getElementById('banner').innerHTML = JSON.parse(err.response).error || 'Unable to process your entry, please try again later.';
+      document.getElementById('resourceSubmit').disabled = false;
     }
   });
 
