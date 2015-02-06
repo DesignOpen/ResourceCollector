@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<title>Design Open: Add Design Resource</title>
+		<link rel="stylesheet" href="/stylesheets/style.css">
 		<script src="/javascripts/submit.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<h1>Add Design Resource</h1>
-			<!-- Status Banner -->
 			<div><p id="banner"></p></div>
 			<div id="resourceForm">
 				<form id="submitResource" onsubmit="return submitForm()">
@@ -28,7 +28,7 @@
 					</div>
 					<div class="form-item">
 						Category:
-						<select name='category'>
+						<select name="category">
 							<% for(var i=0; i<categories.length; i++) {%>
 								<option> <%= categories[i] %> </option>
 							<% } %>
