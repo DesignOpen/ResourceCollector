@@ -1,5 +1,5 @@
 (function(){
-	var endpoint = 'localhost:4000/';
+	var endpoint = 'localhost:3000/';
 
   var DOMReady = function(a,b,c){b=document,c='addEventListener';b[c]?b[c]('DOMContentLoaded',a):window.attachEvent('onload',a)}
 	var updateLink = function(twitter) {
