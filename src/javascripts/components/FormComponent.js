@@ -4,7 +4,7 @@
 
 var React = require('react')
 
-var form = React.createClass({
+var FormComponent = React.createClass({
   render: function () {
     return (
       <div className="container">
@@ -14,15 +14,15 @@ var form = React.createClass({
           <form id="submitResource" onsubmit="return submitForm()">
             <div className="form-item">
               <label htmlFor="titleInput">Title</label>
-              <input id="titleInput" type="text" name="title" value="<%= title %>" required>
+              <input id="titleInput" type="text" name="title" value="<%= title %>" required/>
             </div>
             <div className="form-item">
               <label htmlFor="urlInput">URL</label>
-              <input id="urlInput" type="url" name="URL" value="<%= url %>" required>
+              <input id="urlInput" type="url" name="URL" value="<%= url %>" required/>
             </div>
             <div className="form-item">
               <label htmlFor="twitterInput">Twitter</label>
-              <input id="twitterInput" type="text" name="twitter" value="<%= twitter %>" required>
+              <input id="twitterInput" type="text" name="twitter" value="<%= twitter %>" required/>
             </div>
             <div className="form-item">
               <label htmlFor="descriptionInput">Description</label>
@@ -32,12 +32,12 @@ var form = React.createClass({
               <label htmlFor="categoryInput">Category</label>
               <select id="categoryInput" name="category">
                 {this.props.categories.map(function(category) {
-                  return <option>{category}</option>
+                  return <option value={category}>{category}</option>
                 })}
               </select>
             </div>
             <div className="form-item">
-              <input type="submit" value="Submit Resource" id="resourceSubmit">
+              <input type="submit" value="Submit Resource" id="resourceSubmit"/>
             </div>
           </form>
         </div>
@@ -46,3 +46,5 @@ var form = React.createClass({
   }
 
 });
+
+module.exports = FormComponent;
