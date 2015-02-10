@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
+var minifyCss = require('gulp-minify-css');
 
 //gulp task for production
 gulp.task('prodBookmarklet', function(){
@@ -10,6 +11,12 @@ gulp.task('prodBookmarklet', function(){
 	.pipe(gulp.dest('public/js')) //pipe into public js folder
 });
 
+gulp.task('prodCss', function() {
+	return gulp.src('src/stylesheets/*.css')
+	.pipe(minifyCss())
+	.pipe(gulp.dest('public/stylesheets'))
+});
+
 //gulp task for dev
 gulp.task('devBookmarklet', function(){
 	return gulp.src('src/javascripts/bookmarklet.js') //only this file 
@@ -17,6 +24,11 @@ gulp.task('devBookmarklet', function(){
 	.pipe(gulp.dest('public/js')) //pipe into public js folder
 })
 
-gulp.task('default', ['devBookmarklet']);
+gulp.task('devCss', function() {
+	return gulp.src('src/stylesheets/*.css')
+	.pipe(gulp.dest('public/stylesheets'))
+});
 
-gulp.task('prod', ['prodBookmarklet']);
+gulp.task('default', ['devBookmarklet', 'devCss']);
+
+gulp.task('prod', ['prodBookmarklet', 'prodCss']);
