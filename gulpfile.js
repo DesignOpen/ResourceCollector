@@ -10,7 +10,7 @@ var exorcist = require('exorcist');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
-var nodemon = require('gulp-nodemon');
+var server = require('gulp-express');
 var filter = require('gulp-filter');
 
 var config = {
@@ -24,7 +24,7 @@ var config = {
   }
 };
 
-gulp.task('browser-sync', ['nodemon'], function() {
+gulp.task('browser-sync', ['server'], function() {
   browserSync.init(null, {
     proxy: "http://localhost:3000",
         files: ["public/**/*.*"],
@@ -33,11 +33,9 @@ gulp.task('browser-sync', ['nodemon'], function() {
   });
 });
 
-gulp.task('nodemon', function (cb) {
-  return nodemon({
-    script: './bin/www'
-  }).on('start', function () {
-      cb();
+gulp.task('server', function () {
+  server.run({
+    file: './bin/www'
   });
 });
 
@@ -72,7 +70,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('build', ['styles', 'bookmarklet', 'scripts']);
-gulp.task('default', ['bookmarklet', 'scripts', 'styles', 'browser-sync'], function(){
-  gulp.watch(config.src.javascript+"*.js", ['scripts', browserSync.reload]);
+gulp.task('default', ['browser-sync', 'bookmarklet', 'scripts', 'styles'], function(){
+  gulp.watch(config.src.javascript+"**/*.js", ['scripts', browserSync.reload]);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
 });

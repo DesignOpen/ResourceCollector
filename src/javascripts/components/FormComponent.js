@@ -79,7 +79,7 @@ var FormComponent = React.createClass({
     }
     return (
       <div className="container">
-        <h1>Tada a Design Resource</h1>
+        <h1>Submit a Design Resource</h1>
         <div><p id="banner">{this.state.bannerText}</p></div>
         <div id="resourceForm">
           {form}
