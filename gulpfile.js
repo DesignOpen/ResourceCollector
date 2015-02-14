@@ -66,11 +66,12 @@ gulp.task('scripts', function() {
     .pipe(source('form.js'))
     .pipe(buffer())
     .pipe(gutil.env.type === 'debug' ? gutil.noop() : uglify())
-    .pipe(gulp.dest(config.dest.javascript));
+    .pipe(gulp.dest(config.dest.javascript))
+    .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
 gulp.task('build', ['styles', 'bookmarklet', 'scripts']);
 gulp.task('default', ['browser-sync', 'bookmarklet', 'scripts', 'styles'], function(){
-  gulp.watch(config.src.javascript+"**/*.js", ['scripts', browserSync.reload]);
+  gulp.watch(config.src.javascript+"**/*.js", ['scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
 });
