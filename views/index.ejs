@@ -6,12 +6,7 @@
 		<script type="text/javascript" src="/javascripts/form.js"></script>
 		<script type="text/javascript">
 			function functionCall(categories) {
-				var selectEl = document.forms['submitResource']['category'];
-				categories.forEach(function(category) {
-					var optionEl = document.createElement("option");
-					optionEl.text = category;
-					selectEl.add(optionEl);
-				});
+				window.categories = categories;
 			}
 		</script>
 	</head>
