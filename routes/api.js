@@ -77,11 +77,13 @@ router.post('/resource', function(req, res) {
 	  		error: 'Unable to process your entry, please try again later.'
 	  	});
   	}
-  	res.json({
-  		success: true,
-  		url: response.html_url,
-  		issue: response.number
-  	});
+    else{
+      res.json({
+        success: true,
+        url: response.html_url,
+        issue: response.number
+      });
+    }
   });
 });
 
