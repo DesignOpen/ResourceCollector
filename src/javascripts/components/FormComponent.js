@@ -80,7 +80,7 @@ var FormComponent = React.createClass({
     return (
       <div className="container">
         <h1>Submit a Design Resource</h1>
-        <div><p id="banner">{this.state.bannerText}</p></div>
+        <div><p id="banner" dangerouslySetInnerHTML={{__html:this.state.bannerText}}/></div>
         <div id="resourceForm">
           {form}
         </div>
