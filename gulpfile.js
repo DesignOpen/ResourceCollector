@@ -34,9 +34,7 @@ gulp.task('browser-sync', ['server'], function() {
 });
 
 gulp.task('server', function () {
-  server.run({
-    file: './bin/www'
-  });
+  server.run(['./bin/www']);
 });
 
 gulp.task('bookmarklet', function() {
