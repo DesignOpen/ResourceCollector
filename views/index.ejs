@@ -3,49 +3,15 @@
 	<head>
 		<title>Design Open: Add Design Resource</title>
 		<link rel="stylesheet" href="/stylesheets/style.css">
-		<script type="text/javascript" src="/javascripts/submit.js"></script>
+		<script type="text/javascript" src="/javascripts/form.js"></script>
 		<script type="text/javascript">
 			function functionCall(categories) {
-				var selectEl = document.forms['submitResource']['category'];
-				categories.forEach(function(category) {
-					var optionEl = document.createElement("option");
-					optionEl.text = category;
-					selectEl.add(optionEl);
-				});
+				window.categories = categories;
 			}
 		</script>
 	</head>
 	<body>
-		<div class="container">
-			<h1>Add Design Resource</h1>
-			<div><p id="banner"></p></div>
-			<div id="resourceForm">
-				<form id="submitResource" onsubmit="return submitForm()">
-					<div class="form-item">
-						Title:
-						<input type="text" name="title" value="<%= title %>" required>
-					</div>
-					<div class="form-item">
-						URL:
-						<input type="url" name="URL" value="<%= url %>" required>
-					</div>
-					<div class="form-item">
-						Twitter Handle:
-					<input type="text" name="twitter" value="<%= twitter %>" required></div>
-					<div class="form-item">
-						Description:
-						<textarea name="description" required></textarea>
-					</div>
-					<div class="form-item">
-						Category:
-						<select name="category"></select>
-					</div>
-					<div class="form-item">
-						<input type="submit" value="Submit Resource" id="resourceSubmit">
-					</div>
-				</form>
-			</div>
-		</div>
+		<div>Loading...</div>
 		<script type="text/javascript" src="http://designopen.org/categories.js"></script>
 	</body>
 </html>
