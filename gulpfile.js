@@ -6,7 +6,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var transform = require('vinyl-transform');
-var exorcist = require('exorcist');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
