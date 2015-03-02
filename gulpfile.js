@@ -11,6 +11,7 @@ var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
 var server = require('gulp-express');
 var filter = require('gulp-filter');
+var mocha = require('gulp-mocha');
 
 var config = {
   src: {
@@ -67,8 +68,14 @@ gulp.task('scripts', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
+gulp.task('test', function(){
+  return gulp.src('test/*.js')
+    .pipe(mocha());
+});
+
 gulp.task('build', ['styles', 'bookmarklet', 'scripts']);
 gulp.task('default', ['browser-sync', 'bookmarklet', 'scripts', 'styles'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
+  gulp.watch('test/*.js', ['test']);
 });
