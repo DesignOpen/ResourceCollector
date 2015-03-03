@@ -12,5 +12,5 @@ var FormComponent = require('./components/FormComponent');
 
 document.addEventListener('DOMContentLoaded', function() {
   window.categories.unshift('');
-  React.render(<FormComponent categories={window.categories}/>, document.body);
+  React.render(<FormComponent categories={window.categories} query={window.query}/>, document.body);
 }, false);
