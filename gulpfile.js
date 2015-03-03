@@ -36,8 +36,8 @@ gulp.task('server', function () {
   server.run(['./bin/www']);
 });
 
-gulp.task('bookmarklet', function() {
-  return gulp.src(config.src.javascript+'bookmarklet.js')
+gulp.task('scripts', function() {
+  return gulp.src([config.src.javascript+'*.js', '!./src/javascripts/form.js'])
     .pipe(replace('%HOSTNAME%', 'osdrc.herokuapp.com'))
     .pipe(gutil.env.type === 'debug' ? sourcemaps.init() : gutil.noop())
     .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
@@ -55,7 +55,7 @@ gulp.task('styles', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
-gulp.task('scripts', function() {
+gulp.task('form', function() {
   browserify(config.src.javascript+'form.js', { debug: (gutil.env.type === 'debug') })
     .transform('reactify')
     .bundle()
@@ -67,8 +67,8 @@ gulp.task('scripts', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
-gulp.task('build', ['styles', 'bookmarklet', 'scripts']);
-gulp.task('default', ['browser-sync', 'bookmarklet', 'scripts', 'styles'], function(){
-  gulp.watch(config.src.javascript+"**/*.js", ['scripts']);
+gulp.task('build', ['styles', 'scripts', 'form']);
+gulp.task('default', ['browser-sync', 'scripts', 'form', 'styles'], function(){
+  gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
 });
