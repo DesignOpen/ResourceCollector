@@ -49,15 +49,15 @@ var FormComponent = React.createClass({
         <form id="submitResource" onSubmit={this.submitForms}>
          <div className="form-item">
            <label htmlFor="titleInput">Title</label>
-           <input id="titleInput" type="text" name="title" required onFocus={this.focusHandler} ref="title"/>
+           <input id="titleInput" type="text" name="title" required onFocus={this.focusHandler} ref="title" defaultValue={this.props.query.title}/>
          </div>
          <div className="form-item">
            <label htmlFor="urlInput">URL</label>
-           <input id="urlInput" type="url" name="URL" required ref="url"/>
+           <input id="urlInput" type="url" name="URL" required ref="url" defaultValue={this.props.query.url}/>
          </div>
          <div className="form-item">
            <label htmlFor="twitterInput">Twitter</label>
-           <input id="twitterInput" type="text" name="twitter" required ref="twitter"/>
+           <input id="twitterInput" type="text" name="twitter" required ref="twitter" defaultValue={this.props.query.twitter}/>
          </div>
          <div className="form-item">
            <label htmlFor="descriptionInput">Description</label>
