@@ -152,7 +152,7 @@ router.post('/resource', function(req, res) {
   url = url.trim();
   twitter = twitter.replace(/@/g, '').trim();
   description = description.trim();
-  category = category.trim();
+  category = category.trim().toLowerCase();
 
   if (validator.isNull(title)) {
   	res.status(400).json({
