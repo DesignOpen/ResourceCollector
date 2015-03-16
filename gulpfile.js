@@ -12,6 +12,8 @@ var browserSync = require('browser-sync');
 var server = require('gulp-express');
 var filter = require('gulp-filter');
 var mocha = require('gulp-mocha');
+var mochaPhantomJS = require('gulp-mocha-phantomjs');
+var notify = require('gulp-notify');
 
 var config = {
   src: {
@@ -23,6 +25,11 @@ var config = {
     javascript: './public/javascripts/'
   }
 };
+
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
 
 gulp.task('browser-sync', ['server'], function() {
   browserSync.init(null, {
@@ -69,8 +76,10 @@ gulp.task('form', function() {
 });
 
 gulp.task('test', function(){
-  return gulp.src('test/*.js')
-    .pipe(mocha());
+  return gulp.src('./test/*.html')
+    .pipe(mochaPhantomJS({ 'webSecurityEnabled': false, "outputEncoding": "utf8", "localToRemoteUrlAccessEnabled": true }))
+    .pipe(notify({ message: 'tests finished'}))
+    .on('error', handleError);
 });
 
 gulp.task('build', ['styles', 'scripts', 'form']);

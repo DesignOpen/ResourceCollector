@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Test Runner</title>
+  <!-- <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+  <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+  <script type="text/javascript" src="../node_modules/sinon/lib/sinon.js"></script>
+  <script type="text/javascript" src="../public/vendor/should/should.min.js"></script> -->
+  <script>
+    mocha.setup('bdd');
+    mocha.reporter('html');
+  </script>
+
+<!-- all app scripts/test scripts -->
+<script type="text/javascript" src="./sample_tests.js"></script>
+<script type="text/javascript" src="./api.js"></script>
+
+</head>
+<body>
+  <div id="mocha"></div>
+  <script type="text/javascript">
+    if (window.mochaPhantomJS) mochaPhantomJS.run();
+    else mocha.run();
+  </script>
+</body>
+</html>
