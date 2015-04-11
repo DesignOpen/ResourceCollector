@@ -9,7 +9,7 @@ var transform = require('vinyl-transform');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
-var server = require('gulp-express');
+var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
 var mocha = require('gulp-mocha');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
@@ -23,7 +23,11 @@ var config = {
   dest: {
     styles: './public/stylesheets/',
     javascript: './public/javascripts/'
-  }
+  },
+  serverFiles: [
+    './routes/*.js',
+    './app.js'
+  ]
 };
 
 function handleError(err) {
@@ -31,18 +35,34 @@ function handleError(err) {
   this.emit('end');
 }
 
-gulp.task('browser-sync', ['server'], function() {
-  browserSync.init(null, {
+var options = {
+  server: {
+    path: './bin/www',
+    execArgv: [ '--harmony' ]
+  },
+  browserSync: {
     proxy: "http://localhost:3000",
-        files: ["public/**/*.*"],
-        browser: "google chrome",
-        port: 5000,
+    files: ["public/**/*.*"],
+    browser: "google chrome",
+    port: 5000
+  }
+}
+
+gulp.task('server:start', function(){
+  server.listen(options.server, function(err){
+    if(!err){
+      browserSync(options.browserSync);
+    }
   });
 });
 
-gulp.task('server', function () {
-  server.run(['./bin/www']);
-});
+gulp.task('server:restart', function(){
+  server.restart(function(err){
+    if(!err){
+      browserSync.reload();
+    }
+  });
+})
 
 gulp.task('scripts', function() {
   return gulp.src([config.src.javascript+'*.js', '!./src/javascripts/form.js'])
@@ -83,8 +103,9 @@ gulp.task('test', function(){
 });
 
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('default', ['browser-sync', 'scripts', 'form', 'styles'], function(){
+gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
   gulp.watch('test/*.js', ['test']);
+  gulp.watch(config.serverFiles, ['server:restart'])
 });
