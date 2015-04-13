@@ -13,7 +13,6 @@ var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
 var mocha = require('gulp-mocha');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
-var notify = require('gulp-notify');
 
 var config = {
   src: {
@@ -95,10 +94,9 @@ gulp.task('form', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
-gulp.task('test', function(){
-  return gulp.src('./test/*.html')
-    .pipe(mochaPhantomJS({ 'webSecurityEnabled': false, "outputEncoding": "utf8", "localToRemoteUrlAccessEnabled": true }))
-    .pipe(notify({ message: 'tests finished'}))
+gulp.task('test:front', function(){
+  return gulp.src('./test/client/index.html')
+    .pipe(mochaPhantomJS())
     .on('error', handleError);
 });
 
