@@ -100,10 +100,17 @@ gulp.task('test:front', function(){
     .on('error', handleError);
 });
 
+gulp.task('test:back', function(){
+  return gulp.src('./test/server/*.js')
+    .pipe(mocha({reporter: 'nyan'}))
+    .on('error', handleError);
+})
+
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
+gulp.task('default', ['scripts', 'form', 'styles', 'test:front', 'test:back' 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
-  gulp.watch('test/*.js', ['test']);
+  gulp.watch('test/client/*.js', ['test:front']);
+  gulp.watch('test/server/*.js', ['test:back']);
   gulp.watch(config.serverFiles, ['server:restart'])
 });
