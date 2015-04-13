@@ -107,7 +107,7 @@ gulp.task('test:back', function(){
 })
 
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('default', ['scripts', 'form', 'styles', 'test:front', 'test:back' 'server:start'], function(){
+gulp.task('default', ['scripts', 'form', 'styles', 'test:front', 'test:back', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
   gulp.watch('test/client/*.js', ['test:front']);
