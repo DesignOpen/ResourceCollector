@@ -1,5 +1,5 @@
 var mocha = require('mocha');
-var expect = require('chai');
+var expect = require('chai').expect;
 var request = require('supertest');
 
 describe("simple test suite", function() {
@@ -14,6 +14,7 @@ describe("simple test suite", function() {
     });
 
     it("should have an age", function() {
-      expect(cow.age).to.equal(10);
+      expect(thing.age).to.equal(10);
     });
+  });
 });

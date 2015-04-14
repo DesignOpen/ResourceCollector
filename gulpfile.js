@@ -94,23 +94,29 @@ gulp.task('form', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
-gulp.task('test:front', function(){
+gulp.task('test:compile', function(){
+  browserify(['./test/client/parseURL.js'])
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./test/client/'));
+})
+
+gulp.task('test:client', function(){
   return gulp.src('./test/client/index.html')
     .pipe(mochaPhantomJS())
     .on('error', handleError);
 });
 
-gulp.task('test:back', function(){
+gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
     .pipe(mocha({reporter: 'nyan'}))
     .on('error', handleError);
 })
 
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('default', ['scripts', 'form', 'styles', 'test:front', 'test:back', 'server:start'], function(){
+gulp.task('test', ['test:client', 'test:server']);
+gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);
-  gulp.watch('test/client/*.js', ['test:front']);
-  gulp.watch('test/server/*.js', ['test:back']);
   gulp.watch(config.serverFiles, ['server:restart'])
 });
