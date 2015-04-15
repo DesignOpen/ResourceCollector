@@ -12,7 +12,7 @@ var browserSync = require('browser-sync');
 var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
 var mocha = require('gulp-mocha');
-var mochaPhantomJS = require('gulp-mocha-phantomjs');
+var shell = require('gulp-shell');
 
 var config = {
   src: {
@@ -101,11 +101,9 @@ gulp.task('test:compile', function(){
     .pipe(gulp.dest('./test/client/'));
 })
 
-gulp.task('test:client', function(){
-  return gulp.src('./test/client/index.html')
-    .pipe(mochaPhantomJS())
-    .on('error', handleError);
-});
+gulp.task('test:client', shell.task([
+  'mocha-casperjs test/client/temp.js'
+]));
 
 gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
