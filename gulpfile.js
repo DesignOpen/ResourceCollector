@@ -95,15 +95,16 @@ gulp.task('form', function() {
 });
 
 gulp.task('test:compile', function(){
-  browserify(['./test/client/parseURL.js'])
+  browserify(['./test/client/test-form.js'])
+    .transform('reactify')
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('./test/client/'));
 })
 
-gulp.task('test:client', shell.task([
-  'mocha-casperjs test/client/temp.js'
-]));
+gulp.task('test:client', ['test:compile'],function(){
+  //something
+});
 
 gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
