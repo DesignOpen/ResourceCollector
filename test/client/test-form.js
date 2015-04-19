@@ -9,7 +9,7 @@ var container = document.getElementById('test-container');
 
 describe('Form tests', function(){
   before(function(){
-    var categories = ["philosophy", "sources", "redesigns", "inspiration", "tutorials"];
+    var categories = ["", "philosophy", "sources", "redesigns", "inspiration", "tutorials"];
     this.form = React.render(<FormComponent categories={categories} query={{}}/>, container);
   });
 
@@ -20,7 +20,33 @@ describe('Form tests', function(){
   describe('Initialization', function(){
     it('should have an empty Title input', function(){
       var el = document.getElementById('titleInput');
+      expect(el).to.exist;
       expect(el.value).to.be.empty;
     });
-  })
+    it('should have an empty URL input', function(){
+      var el = document.getElementById('urlInput');
+      expect(el).to.exist;
+      expect(el.value).to.be.empty;
+    });
+    it('should have an empty Twitter input', function(){
+      var el = document.getElementById('twitterInput');
+      expect(el).to.exist;
+      expect(el.value).to.be.empty;
+    });
+    it('should have an empty Description input', function(){
+      var el = document.getElementById('descriptionInput');
+      expect(el).to.exist;
+      expect(el.value).to.be.empty;
+    });
+    it('should have an empty Category input', function(){
+      var el = document.getElementById('categoryInput');
+      expect(el).to.exist;
+      expect(el.value).to.be.empty;
+    });
+    it('should have a submit button', function(){
+      var el = document.getElementById('resourceSubmit');
+      expect(el).to.exist;
+    });
+  });
+
 })
