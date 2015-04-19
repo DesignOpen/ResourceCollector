@@ -5,28 +5,22 @@ var expect = chai.expect;
 var React = require('react');
 var FormComponent = require('../../src/javascripts/components/FormComponent');
 
-var afterEachCase = function() {
-  try {
-    this.form.remove();
-  } catch (e) {
-    console.log('error: ', e);
-  }
-};
+var container = document.getElementById('test-container');
 
 describe('Form tests', function(){
-  beforeEach(function(){
-    //add the form component here!
-    //see if this does it properly
+  before(function(){
     var categories = ["philosophy", "sources", "redesigns", "inspiration", "tutorials"];
-    // this.form = React.render(<FormComponent categories={categories} query={{}}/>, document.body);
+    this.form = React.render(<FormComponent categories={categories} query={{}}/>, container);
   });
 
-  // afterEach(afterEachCase);
+  after(function(){
+      React.unmountComponentAtNode(container);
+  });
 
   describe('Initialization', function(){
     it('should have an empty Title input', function(){
-      // expect(document.getElementById('titleInput').value).to.be.empty;
-      expect(true).to.be.true;
+      var el = document.getElementById('titleInput');
+      expect(el.value).to.be.empty;
     });
   })
 })

@@ -12,7 +12,8 @@ var browserSync = require('browser-sync');
 var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
 var mocha = require('gulp-mocha');
-var shell = require('gulp-shell');
+var testem = require('gulp-testem');
+var http = require('http');
 
 var config = {
   src: {
@@ -102,8 +103,22 @@ gulp.task('test:compile', function(){
     .pipe(gulp.dest('./test/client/'));
 })
 
-gulp.task('test:client', ['test:compile'],function(){
-  //something
+gulp.task('coverage', function () {
+  var coverageServer = http.createServer(function (req, resp) {
+    req.pipe(fs.createWriteStream('coverage.json'))
+    resp.end()
+  });
+
+  var port = 7358;
+  coverageServer.listen(port);
+  console.log("Coverage Server Started on port", port);
+});
+
+gulp.task('test:client', ['test:compile', 'coverage'],function(){
+  gulp.src([''])
+    .pipe(testem({
+      configFile: 'testem.json'
+    }));
 });
 
 gulp.task('test:server', function(){
