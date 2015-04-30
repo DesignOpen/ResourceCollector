@@ -30,3 +30,4 @@ node_modules
 # Built JS and CSS
 public/javascripts
 public/stylesheets
+test/client/bundle.js

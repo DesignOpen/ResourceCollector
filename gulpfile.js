@@ -11,6 +11,9 @@ var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
 var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
+var mocha = require('gulp-mocha');
+var testem = require('gulp-testem');
+var http = require('http');
 
 var config = {
   src: {
@@ -26,6 +29,11 @@ var config = {
     './app.js'
   ]
 };
+
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
 
 var options = {
   server: {
@@ -87,7 +95,40 @@ gulp.task('form', function() {
     .pipe(gutil.env.type === 'debug' ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
+gulp.task('test:compile', function(){
+  browserify(['./test/client/test-form.js'])
+    .transform('reactify')
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./test/client/'));
+})
+
+gulp.task('coverage', function () {
+  var coverageServer = http.createServer(function (req, resp) {
+    req.pipe(fs.createWriteStream('coverage.json'))
+    resp.end()
+  });
+
+  var port = 7358;
+  coverageServer.listen(port);
+  console.log("Coverage Server Started on port", port);
+});
+
+gulp.task('test:client', ['test:compile', 'coverage'],function(){
+  gulp.src([''])
+    .pipe(testem({
+      configFile: 'testem.json'
+    }));
+});
+
+gulp.task('test:server', function(){
+  return gulp.src('./test/server/*.js')
+    .pipe(mocha({reporter: 'nyan'}))
+    .on('error', handleError);
+})
+
 gulp.task('build', ['styles', 'scripts', 'form']);
+gulp.task('test', ['test:client', 'test:server']);
 gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);

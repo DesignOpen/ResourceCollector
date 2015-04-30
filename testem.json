@@ -1,0 +1,10 @@
+{
+  "framework": "mocha",
+  "src_files": [
+    "test/client/*.js"
+  ],
+  "test_page": "test/client/testem.html",
+  "routes": {
+    "/node_modules": "node_modules"
+  }
+}
