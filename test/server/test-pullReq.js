@@ -58,6 +58,7 @@ describe('Pull Req Util', function(){
 
   describe('pullReq.makePullRequest', function(){
     it('should return a pull request', function(){
+      //TODO: Figure out how to test Q promises & to stub calls to github.
       // var result = pullReq.makePullRequest(sub);
       var result = 1;
       expect(result).to.exist;
