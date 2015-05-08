@@ -139,5 +139,6 @@ var makePullRequest = function(submission) {
 module.exports = {
   makePullRequest: makePullRequest,
   getContent: getContent,
-  getSummary: getSummary
+  getSummary: getSummary,
+  getDate: getDate
 };

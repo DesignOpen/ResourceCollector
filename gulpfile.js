@@ -11,7 +11,7 @@ var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
 var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
-var mocha = require('gulp-mocha');
+var mocha = require('gulp-spawn-mocha');
 var testem = require('gulp-testem');
 var http = require('http');
 
@@ -123,7 +123,13 @@ gulp.task('test:client', ['test:compile', 'coverage'],function(){
 
 gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
-    .pipe(mocha({reporter: 'nyan'}))
+    .pipe(mocha({
+      // reporter: 'nyan',
+      env: {
+        'github_key': '781ff162552251424440c5d009aa366c09313c9c',
+        'github_repo': 'osdrc-testing/PRtesting'
+        }
+      }))
     .on('error', handleError);
 })
 

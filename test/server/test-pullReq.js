@@ -1,20 +1,45 @@
 var mocha = require('mocha');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var GitHubApi = require("github");
+var env = require('../../config/env');
 var pullReq = require('../../utils/pullReq');
 
 /* Test requires that environment variables be available */
 /* github_key & github_repo */
 // Testing github_key=781ff162552251424440c5d009aa366c09313c9c
 // Testing github_repo=osdrc-testing/PRtesting
-//test getContent;
+
+/* Helper function */
+function closePullRequest(title, number, cb){
+  var body = {
+    title: title,
+    number: number,
+    user: env.github_repo.split('/')[0],
+    repo: env.github_repo.split('/')[1],
+    state: 'closed'
+  };
+  var github = new GitHubApi({
+      version: "3.0.0"
+  });
+  github.authenticate({
+      type: "token",
+      token: env.github_key
+  });
+  //delete opened pull request
+  github.pullRequests.update(body, function(){
+    cb();
+  });
+}
+
 describe('Pull Req Util', function(){
   before(function(){
+    var d = new Date();
     sub = {
-      title: 'Testing',
+      title: 'Testing '+d.toTimeString(),
       url: 'http://www.designopen.com',
       category: 'sources',
-      twitter: '@__christianmata',
+      twitter: '__christianmata',
       description: 'Something amazing! To test.'
     }
   });
@@ -35,7 +60,7 @@ describe('Pull Req Util', function(){
 
     it('should return a properly formatted string', function(){
       var result = pullReq.getContent(sub);
-      expect(result).to.equal('---\ntitle: "Testing"\nlayout: resource\nsource_url: "http://www.designopen.com"\ncategory: "sources"\ncontributor: "@__christianmata"\nposted_date: "2015-06-6"\n---\nSomething amazing! To test.');
+      expect(result).to.equal('---\ntitle: "'+sub.title+'"\nlayout: resource\nsource_url: "http://www.designopen.com"\ncategory: "sources"\ncontributor: "__christianmata"\nposted_date: "'+ pullReq.getDate() +'"\n---\nSomething amazing! To test.');
     })
   });
 
@@ -54,16 +79,20 @@ describe('Pull Req Util', function(){
 
     it('should be have proper formatting', function(){
       var result = pullReq.getSummary(sub);
-      expect(result).to.equal('**URL:** http://www.designopen.com\n**Category:** sources\n**Submitted by:** [@@__christianmata](http://twitter.com/@__christianmata)\n\n**Description:** \nSomething amazing! To test.')
+      expect(result).to.equal('**URL:** http://www.designopen.com\n**Category:** sources\n**Submitted by:** [@__christianmata](http://twitter.com/__christianmata)\n\n**Description:** \nSomething amazing! To test.')
     });
   });
 
+  //async test
   describe('pullReq.makePullRequest', function(){
-    it('should return a pull request', function(){
-      //TODO: Figure out how to test Q promises & to stub calls to github.
-      // var result = pullReq.makePullRequest(sub);
-      var result = 1;
-      expect(result).to.exist;
+    it('should return a pull request', function(done){
+      this.timeout(0);
+      pullReq.makePullRequest(sub).then(function(pr){
+        expect(pr).to.exist;
+        expect(pr.title).to.equal('Add resource: '+sub.title);
+        expect(pr.body).to.equal('**URL:** http://www.designopen.com\n**Category:** sources\n**Submitted by:** [@__christianmata](http://twitter.com/__christianmata)\n\n**Description:** \nSomething amazing! To test.');
+        closePullRequest(pr.title, pr.number, done);
+      });
     });
   });
 });
