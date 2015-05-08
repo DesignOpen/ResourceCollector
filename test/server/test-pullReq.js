@@ -5,6 +5,8 @@ var pullReq = require('../../utils/pullReq');
 
 /* Test requires that environment variables be available */
 /* github_key & github_repo */
+// Testing github_key=781ff162552251424440c5d009aa366c09313c9c
+// Testing github_repo=osdrc-testing/PRtesting
 //test getContent;
 describe('Pull Req Util', function(){
   before(function(){
