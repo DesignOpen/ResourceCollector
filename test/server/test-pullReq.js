@@ -2,36 +2,12 @@ var mocha = require('mocha');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var GitHubApi = require("github");
-var env = require('../../config/env');
 var pullReq = require('../../utils/pullReq');
 
 /* Test requires that environment variables be available */
 /* github_key & github_repo */
 // Testing github_key=781ff162552251424440c5d009aa366c09313c9c
 // Testing github_repo=osdrc-testing/PRtesting
-
-/* Helper function */
-function closePullRequest(title, number, cb){
-  var body = {
-    title: title,
-    number: number,
-    user: env.github_repo.split('/')[0],
-    repo: env.github_repo.split('/')[1],
-    state: 'closed'
-  };
-  var github = new GitHubApi({
-      version: "3.0.0"
-  });
-  github.authenticate({
-      type: "token",
-      token: env.github_key
-  });
-  //delete opened pull request
-  github.pullRequests.update(body, function(){
-    cb();
-  });
-}
-
 describe('Pull Req Util', function(){
   before(function(){
     var d = new Date();
@@ -91,7 +67,7 @@ describe('Pull Req Util', function(){
         expect(pr).to.exist;
         expect(pr.title).to.equal('Add resource: '+sub.title);
         expect(pr.body).to.equal('**URL:** http://www.designopen.com\n**Category:** sources\n**Submitted by:** [@__christianmata](http://twitter.com/__christianmata)\n\n**Description:** \nSomething amazing! To test.');
-        closePullRequest(pr.title, pr.number, done);
+        pullReq.closePullRequest(pr.title, pr.number, done);
       });
     });
   });

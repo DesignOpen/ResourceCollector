@@ -136,9 +136,33 @@ var makePullRequest = function(submission) {
   return process(submission);
 };
 
+/* Helper function */
+function closePullRequest(title, number, cb){
+  console.log('calld close Pull request!');
+  var body = {
+    title: title,
+    number: number,
+    user: env.github_repo.split('/')[0],
+    repo: env.github_repo.split('/')[1],
+    state: 'closed'
+  };
+  var github = new GitHubApi({
+      version: "3.0.0"
+  });
+  github.authenticate({
+      type: "token",
+      token: env.github_key
+  });
+  //delete opened pull request
+  github.pullRequests.update(body, function(){
+    cb();
+  });
+}
+
 module.exports = {
   makePullRequest: makePullRequest,
   getContent: getContent,
   getSummary: getSummary,
-  getDate: getDate
+  getDate: getDate,
+  closePullRequest: closePullRequest
 };
