@@ -27,7 +27,11 @@ var config = {
   serverFiles: [
     './routes/*.js',
     './app.js'
-  ]
+  ],
+  tests:{
+    client: ['./test/client/test-form.js'],
+    server: ['./test/server/*.js']
+  }
 };
 
 function handleError(err) {
@@ -115,6 +119,7 @@ gulp.task('coverage', function () {
 });
 
 gulp.task('test:client', ['test:compile', 'coverage'],function(){
+  gulp.watch(config.tests.client, ['test:compile']);
   gulp.src([''])
     .pipe(testem({
       configFile: 'testem.json'
