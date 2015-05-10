@@ -127,8 +127,7 @@ gulp.task('test:server', function(){
       reporter: 'nyan',
       env: {
         //Github doesn't allow pushing public keys here
-        //So here's one to use: github_key='0f347c2c079395093bb80ea7be0d40f1c4268648'.
-        //Could also choose to use one of your own.
+        //So you'll have to make your own, otherwise it'll crash.
         'github_key': '<----- INSERT PUBLIC KEY HERE ----->',
         'github_repo': 'osdrc-testing/PRtesting'
         }

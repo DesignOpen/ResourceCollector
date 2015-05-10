@@ -5,7 +5,7 @@ var GitHubApi = require("github");
 var pullReq = require('../../utils/pullReq');
 
 /* Test requires that environment variables be available */
-/* github_key & github_repo */
+/* github_key='1f428193bc209e58fe53b16a003231034e84cf7c' & github_repo */
 describe('Pull Req Util', function(){
   before(function(){
     var d = new Date();
