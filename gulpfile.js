@@ -137,7 +137,7 @@ gulp.task('test:server', function(){
 })
 
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('test', ['test:client', 'test:server']);
+gulp.task('test', ['test:server', 'test:client']);
 gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);

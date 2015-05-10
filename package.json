@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "gulp build --type production"
+    "postinstall": "gulp build --type production",
+    "test": "gulp test:server"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
