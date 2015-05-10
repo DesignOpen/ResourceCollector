@@ -11,7 +11,7 @@ var source = require('vinyl-source-stream');
 var browserSync = require('browser-sync');
 var server = require('gulp-develop-server');
 var filter = require('gulp-filter');
-var mocha = require('gulp-mocha');
+var mocha = require('gulp-spawn-mocha');
 var testem = require('gulp-testem');
 var http = require('http');
 
@@ -123,12 +123,21 @@ gulp.task('test:client', ['test:compile', 'coverage'],function(){
 
 gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
-    .pipe(mocha({reporter: 'nyan'}))
+    .pipe(mocha({
+      reporter: 'nyan',
+      env: {
+        //Github doesn't allow pushing public keys here
+        //So you can either put your own Github public key or copy paste the key from test/server/test-api.js
+        //Otherwise the api test will crash.
+        'github_key': '<----- INSERT PUBLIC KEY HERE ----->',
+        'github_repo': 'osdrc-testing/PRtesting'
+        }
+      }))
     .on('error', handleError);
 })
 
 gulp.task('build', ['styles', 'scripts', 'form']);
-gulp.task('test', ['test:client', 'test:server']);
+gulp.task('test', ['test:server', 'test:client']);
 gulp.task('default', ['scripts', 'form', 'styles', 'server:start'], function(){
   gulp.watch(config.src.javascript+"**/*.js", ['form', 'scripts']);
   gulp.watch(config.src.styles+"*.styl", ['styles']);

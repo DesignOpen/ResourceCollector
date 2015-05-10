@@ -3,8 +3,6 @@ var shortId = require('shortid');
 var GitHubApi = require("github");
 var Q = require("q");
 
-var pullReq = {};
-
 var getDate = function() {
   var date = new Date();
   var year = date.getFullYear();
@@ -46,7 +44,7 @@ var getSummary = function(submission) {
     return content.join("\n");
 }
 
-pullReq.makePullRequest = function(submission) {
+var makePullRequest = function(submission) {
   var github = new GitHubApi({
       version: "3.0.0"
   });
@@ -120,7 +118,7 @@ pullReq.makePullRequest = function(submission) {
       return newPullRequest;
     });
   }
-  
+
   function process(submission) {
     var msg = {};
     msg.user = env.github_repo.split('/')[0];
@@ -138,4 +136,32 @@ pullReq.makePullRequest = function(submission) {
   return process(submission);
 };
 
-module.exports = pullReq;
+/* Helper function */
+function closePullRequest(title, number, cb){
+  var body = {
+    title: title,
+    number: number,
+    user: env.github_repo.split('/')[0],
+    repo: env.github_repo.split('/')[1],
+    state: 'closed'
+  };
+  var github = new GitHubApi({
+      version: "3.0.0"
+  });
+  github.authenticate({
+      type: "token",
+      token: env.github_key
+  });
+  //delete opened pull request
+  github.pullRequests.update(body, function(){
+    cb();
+  });
+}
+
+module.exports = {
+  makePullRequest: makePullRequest,
+  getContent: getContent,
+  getSummary: getSummary,
+  getDate: getDate,
+  closePullRequest: closePullRequest
+};
