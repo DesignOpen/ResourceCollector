@@ -138,7 +138,6 @@ var makePullRequest = function(submission) {
 
 /* Helper function */
 function closePullRequest(title, number, cb){
-  console.log('calld close Pull request!');
   var body = {
     title: title,
     number: number,

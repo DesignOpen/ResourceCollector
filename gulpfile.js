@@ -124,9 +124,12 @@ gulp.task('test:client', ['test:compile', 'coverage'],function(){
 gulp.task('test:server', function(){
   return gulp.src('./test/server/*.js')
     .pipe(mocha({
-      // reporter: 'nyan',
+      reporter: 'nyan',
       env: {
-        'github_key': '781ff162552251424440c5d009aa366c09313c9c',
+        //Github doesn't allow pushing public keys here
+        //So here's one to use: github_key='0f347c2c079395093bb80ea7be0d40f1c4268648'.
+        //Could also choose to use one of your own.
+        'github_key': '<----- INSERT PUBLIC KEY HERE ----->',
         'github_repo': 'osdrc-testing/PRtesting'
         }
       }))
